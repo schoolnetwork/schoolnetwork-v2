@@ -80,16 +80,6 @@
         <img src="media/profile.svg" class="profile" id="profile" />
       </div>
     </nav>
-    <div class="announce">
-      <h2>
-        New games, new features, and more! Check out the
-        <a href="/macblog/updates/macvg/2024/august.html" target="_blank"
-          >MacVG August Update</a
-        >
-        🆕!
-        <img src="/maclearn/xmark-solid.svg" alt="X" id="closea" />
-      </h2>
-    </div>
     <div class="macsidebar" id="sidebar">
       <a href="/"><img src="/logo.png" alt="" /></a>
       <a href="/macideas/"><img src="/MacIdeas Logo.png" alt="" /></a>
@@ -98,6 +88,29 @@
       <a href="/macvg/"><img src="/MacVG Logo.png" alt="" /></a>
       <a href="/macblog/"><img src="/MacBlog Logo.png" alt="" /></a>
     </div>
+    <div class="modal-background">
+      <div class="modal">
+        <h2 class="modal-title">MacVG Winter Update</h2>
+        <img src="media/update.jpg" class="modal-img" />
+        <p class="modal-des">
+          Update stuff!!!
+          <!--TODO:finish this description update-->
+        </p>
+        <a
+          href="/macblog/updates/macvg/2025/winter.html"
+          class="modal-link"
+          target="_blank"
+        >
+          What's new
+        </a>
+      </div>
+    </div>
+    <script>
+      let updateModal = document.querySelector(".modal-background");
+      if (localStorage.macvgmodal) {
+        updateModal.style.display = "none";
+      }
+    </script>
     <div class="wrap" id="wrap">
       <header class="homeheader">
         <div class="title" name="Welcome to MacVG!">Welcome to MacVG!</div>
@@ -1075,9 +1088,7 @@
         <a href="/macvg/projects/portalflash/" class="game" id="game176">
           Portal (Flash)
         </a>
-        <a href="/macvg/projects/pou/" class="game" id="game419">
-          Pou
-        </a>
+        <a href="/macvg/projects/pou/" class="game" id="game419"> Pou </a>
 
         <a href="/macvg/projects/protektor/" class="game" id="game178">
           Protektor
@@ -1101,7 +1112,11 @@
         <a href="/macvg/projects/rabbit-samurai2/" class="game" id="game182">
           Rabbit Samurai 2
         </a>
-        <a href="/macvg/projects/racing-monster-truck/" class="game" id="game421">
+        <a
+          href="/macvg/projects/racing-monster-truck/"
+          class="game"
+          id="game421"
+        >
           Racing Monster Trucks
         </a>
         <a href="/macvg/projects/retro-bowl/" class="game" id="game184">
@@ -1331,7 +1346,11 @@
         <a href="/macvg/projects/superhot/" class="game" id="game236">
           Superhot
         </a>
-        <a href="/macvg/projects/super-liquid-soccer/" class="game" id="game431">
+        <a
+          href="/macvg/projects/super-liquid-soccer/"
+          class="game"
+          id="game431"
+        >
           Super Liquid Soccer
         </a>
         <a href="/macvg/projects/super-mario-wonder/" class="game" id="game432">
@@ -1346,9 +1365,7 @@
           Super Mario Construct
         </a>
 
-        <a href="/macvg/projects/swingo/" class="game" id="game433">
-          Swingo
-        </a>
+        <a href="/macvg/projects/swingo/" class="game" id="game433"> Swingo </a>
         <a href="/macvg/projects/synesthesia/" class="game" id="game241">
           Synesthesia
         </a>
@@ -1599,6 +1616,15 @@
     </footer>
     <script src="/macvg/app.js"></script>
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let updateModal = document.querySelector(".modal-background");
+        document.addEventListener("click", (e) => {
+          if (e.target === updateModal) {
+            e.target.style.display = "none";
+            localStorage.setItem("macvgmodal", "true");
+          }
+        });
+      });
       if (
         localStorage.getItem("favorites") === "bruh" ||
         localStorage.getItem("favorites") === null
@@ -1607,14 +1633,6 @@
         favoriteList.style.display = "none";
         localStorage.setItem("favorites", "bruh");
       }
-      const close = document.getElementById("closea");
-      if (localStorage.getItem("macvgcloseeeeeeee")) {
-        close.parentElement.parentElement.style.display = "none";
-      }
-      close.addEventListener("click", function () {
-        close.parentElement.parentElement.style.display = "none";
-        localStorage.setItem("macvgcloseeeeeeee", "closed");
-      });
       document.addEventListener("DOMContentLoaded", function () {
         const random = document.getElementById("random");
 
@@ -1676,58 +1694,74 @@
           });
         }
       });
-const filterAll = document.getElementById("filter-all");
-const filterAction = document.getElementById("filter-action");
-const filterStrategy = document.getElementById("filter-strategy");
-const filterCasual = document.getElementById("filter-casual");
-const filterDriving = document.getElementById("filter-driving");
-const sortName = document.getElementById("sort-name");
-const sortCatagory = document.getElementById("sort-catagory");
-let filterGamesList = document.getElementById("list");
+      const filterAll = document.getElementById("filter-all");
+      const filterAction = document.getElementById("filter-action");
+      const filterStrategy = document.getElementById("filter-strategy");
+      const filterCasual = document.getElementById("filter-casual");
+      const filterDriving = document.getElementById("filter-driving");
+      const sortName = document.getElementById("sort-name");
+      const sortCatagory = document.getElementById("sort-catagory");
+      let filterGamesList = document.getElementById("list");
 
-let newArray = [];
-let secondArray = [];
-let everythingArray = [];
-let data;
-fetch("games.json")
-  .then((response) => response.json())
-  .then((dataa) => {
-    data = dataa.games;
-    for (var i = 0; i < data.length; i++) {
-      newArray.push(data[i]);
-    }
-    everythingArray = newArray;
-    secondArray = newArray;
-    sortStuff(secondArray, "name");
-    targetLabel.innerHTML = "Sort By: Name";
-  })
-  .catch((error) => console.error("Error fetching data:", error));
-document.addEventListener("click", (e) => {
-  let eTarget = e.target;
-  let targetLabel = eTarget.parentElement.parentElement.children[0];
-  if (eTarget === filterAction) {
-    filterStuff(everythingArray, "action");
-    targetLabel.innerHTML = "Action & Adventure (158)";
-  } else if (eTarget === filterStrategy) {
-    filterStuff(everythingArray, "strategy");
-    targetLabel.innerHTML = "Strategy & Puzzle (135)";
-  } else if (eTarget === filterCasual) {
-    filterStuff(everythingArray, "casual");
-    targetLabel.innerHTML = "Casual & Idle (54)";
-  } else if (eTarget === filterDriving) {
-    filterStuff(everythingArray, "driving");
-    targetLabel.innerHTML = "Driving & Sports (53)";
-  } else if (eTarget === filterAll) {
-    sortStuff(everythingArray, "name");
-    targetLabel.innerHTML = "Filter All (400)";
-  } else if (eTarget === sortName) {
-    targetLabel.innerHTML = "Sort By: Name";
-    sortStuff(secondArray, "name");
-  } else if (eTarget === sortCatagory) {
-    targetLabel.innerHTML = "Sort By: Catagory";
-    sortStuff(secondArray, "catagory");
-  }
-});
+      let newArray = [];
+      let secondArray = [];
+      let everythingArray = [];
+      let data;
+      fetch("games.json")
+        .then((response) => response.json())
+        .then((dataa) => {
+          data = dataa.games;
+          for (var i = 0; i < data.length; i++) {
+            newArray.push(data[i]);
+          }
+          everythingArray = newArray;
+          secondArray = newArray;
+          sortStuff(secondArray, "name");
+          const games = document.getElementById("list");
+          let items = Array.from(games.getElementsByTagName("a"));
+          items.forEach((item) => {
+            let itemID = item.getAttribute("id");
+            data.forEach((dataItem) => {
+              if (dataItem.id == itemID.slice(4)) {
+                const currentHref = item.getAttribute("href");
+                const newLink = currentHref.replace(
+                  `https://${window.location.host}/macvg/projects/`,
+                  `https://macvg-games.github.io/${dataItem.catagory}-games/`
+                );
+                console.log(newLink)
+                item.setAttribute("href", newLink);
+              }
+            });
+          });
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+
+      document.addEventListener("click", (e) => {
+        let eTarget = e.target;
+        let targetLabel = eTarget.parentElement.parentElement.children[0];
+        if (eTarget === filterAction) {
+          filterStuff(everythingArray, "action");
+          targetLabel.innerHTML = "Action & Adventure (158)";
+        } else if (eTarget === filterStrategy) {
+          filterStuff(everythingArray, "strategy");
+          targetLabel.innerHTML = "Strategy & Puzzle (135)";
+        } else if (eTarget === filterCasual) {
+          filterStuff(everythingArray, "casual");
+          targetLabel.innerHTML = "Casual & Idle (54)";
+        } else if (eTarget === filterDriving) {
+          filterStuff(everythingArray, "driving");
+          targetLabel.innerHTML = "Driving & Sports (53)";
+        } else if (eTarget === filterAll) {
+          sortStuff(everythingArray, "name");
+          targetLabel.innerHTML = "Filter All (400)";
+        } else if (eTarget === sortName) {
+          targetLabel.innerHTML = "Sort By: Name";
+          sortStuff(secondArray, "name");
+        } else if (eTarget === sortCatagory) {
+          targetLabel.innerHTML = "Sort By: Catagory";
+          sortStuff(secondArray, "catagory");
+        }
+      });
     </script>
   </body>
 </html>
