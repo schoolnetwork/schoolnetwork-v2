@@ -18,11 +18,11 @@ document.addEventListener("mousemove", function (event) {
 
 //**Above is the universal code for every MacWeb JavaScript file**//
 
-const google = ["Google", "/macvg/media/google.png"];
-const canva = ["Home - Canva", "/macvg/media/canva.png"];
-const clever = ["Clever | Portal", "/macvg/media/clever.png"];
-const schoology = ["Home | Schoology", "/macvg/media/schoology.png"];
-const newTab = ["New Tab", "/macvg/media/new-tab.png"];
+const google = ["Google", "/SchoolNetV2/media/google.png"];
+const canva = ["Home - Canva", "/SchoolNetV2/media/canva.png"];
+const clever = ["Clever | Portal", "/SchoolNetV2/media/clever.png"];
+const schoology = ["Home | Schoology", "/SchoolNetV2/media/schoology.png"];
+const newTab = ["New Tab", "/SchoolNetV2/media/new-tab.png"];
 
 function google1() {
   localStorage.setItem("title", google);
@@ -47,8 +47,8 @@ function newTab1() {
 function unCloak() {
   const pageTon = document.querySelector(".cloak");
   const favicon = document.querySelector(".favicon");
-  favicon.outerHTML = `<link class="favicon" rel="icon" type="image/x-icon" href="/macvg/media/logo.png" />`;
-  pageTon.innerHTML = "Settings | MacVG";
+  favicon.outerHTML = `<link class="favicon" rel="icon" type="image/x-icon" href="/SchoolNetV2/media/logo.png" />`;
+  pageTon.innerHTML = "Settings | SchoolNetV2";
   localStorage.setItem("title", "");
 }
 
